@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "447436941749",
+    "project_id": "e-material-ef42c",
+    "storage_bucket": "e-material-ef42c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447436941749:android:b09516668c9c2941c811fc",
+        "android_client_info": {
+          "package_name": "com.ematerial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447436941749-r385h4q6p5dgl5ugtl6cu3p828khts7p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAstDfeP4UNYnn6uXdLzbUYuY2ye4dwL4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447436941749-r385h4q6p5dgl5ugtl6cu3p828khts7p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
