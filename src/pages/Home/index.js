@@ -21,20 +21,35 @@ import MyNews from '../../components/MyNews';
 import MyKategori from '../../components/MyKategori';
 import axios from 'axios';
 import MyCarouser2 from '../../components/MyCarouser2';
+import {MyButton, MyGap} from '../../components';
 
 export default function Home({navigation}) {
-  const images = [
-    {
-      image:
-        'https://images.bisnis-cdn.com/posts/2019/09/27/1153079/rruk-dynamix2.jpg',
-    },
-    {
-      image: 'https://kipmi.or.id/wp-content/uploads/2017/01/molen-kecil.jpg',
-    },
-    {
-      image: 'https://kipmi.or.id/wp-content/uploads/2016/11/beton8.jpg',
-    },
+  const monthNames = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
   ];
+
+  var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+  const Today = new Date();
+  const hari = String(days[Today.getDay()]);
+  const dd = String(Today.getDate()).padStart(2, '0');
+  const mm = String(monthNames[Today.getMonth()]); //January is 0!
+  const yyyy = Today.getFullYear();
+  const jam = Today.getHours();
+  const menit = Today.getMinutes();
+  const detik = Today.getUTCSeconds();
+  const today = `${hari}, ${dd} ${mm} ${yyyy}`;
 
   const [user, setUser] = useState([]);
   const [token, setToken] = useState('');
@@ -85,20 +100,34 @@ export default function Home({navigation}) {
             flexDirection: 'row',
             paddingHorizontal: 10,
           }}>
-          <View style={{flex: 1}}>
-            <Image
-              source={require('../../assets/logo.png')}
-              style={{width: 200, resizeMode: 'contain'}}
-            />
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View>
+              <Image
+                source={require('../../assets/logo.png')}
+                style={{width: 150, resizeMode: 'contain'}}
+              />
+            </View>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+              }}>
+              <Icon
+                type="ionicon"
+                name="calendar-outline"
+                color={colors.black}
+              />
+              <Text
+                style={{
+                  fontSize: windowWidth / 27,
+                  fontFamily: fonts.secondary[600],
+                  color: colors.primary,
+                }}>
+                {today}
+              </Text>
+            </View>
           </View>
-
-          <Text
-            style={{
-              fontSize: windowWidth / 20,
-              fontFamily: fonts.secondary[600],
-            }}>
-            19 Juli 2021
-          </Text>
         </View>
         <View
           style={{
@@ -113,31 +142,27 @@ export default function Home({navigation}) {
                 color: colors.black,
                 fontFamily: fonts.secondary[400],
               }}>
-              Hallo, Selamat Bekerja
+              Hallo , Selamat Bekerja
             </Text>
-            <Text
-              style={{
-                fontSize: windowWidth / 22,
-                color: colors.black,
-                fontFamily: fonts.secondary[600],
-              }}>
-              {user.nama_lengkap}
-            </Text>
-          </View>
 
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Cart')}
-            style={{
-              padding: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Icon
-              type="ionicon"
-              name="notifications-outline"
-              color={colors.black}
-            />
-          </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                type="ionicon"
+                size={windowWidth / 22}
+                name="person"
+                color={colors.black}
+              />
+              <Text
+                style={{
+                  left: 10,
+                  fontSize: windowWidth / 22,
+                  color: colors.black,
+                  fontFamily: fonts.secondary[600],
+                }}>
+                {user.nama_lengkap}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={{flex: 1, padding: 10}}>
           <View
@@ -152,77 +177,61 @@ export default function Home({navigation}) {
                 fontFamily: fonts.secondary[600],
                 color: colors.primary,
               }}>
-              E Material
+              <Icon
+                type="ionicon"
+                size={windowWidth / 22}
+                name="cube-outline"
+                color={colors.black}
+              />{' '}
+              E Material{' '}
+              <Icon
+                type="ionicon"
+                size={windowWidth / 22}
+                name="cube-outline"
+                color={colors.black}
+              />
             </Text>
           </View>
-          <TouchableOpacity
+          <View
             style={{
-              backgroundColor: colors.secondary,
-              padding: 20,
-              marginVertical: 5,
-              borderRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
+              flex: 1,
             }}>
-            <Text
-              style={{
-                fontSize: windowWidth / 25,
-                fontFamily: fonts.secondary[600],
-              }}>
-              Material Baru
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: colors.secondary,
-              padding: 20,
-              marginVertical: 5,
-              borderRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: windowWidth / 25,
-                fontFamily: fonts.secondary[600],
-              }}>
-              Material Return
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: colors.secondary,
-              padding: 20,
-              marginVertical: 5,
-              borderRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: windowWidth / 25,
-                fontFamily: fonts.secondary[600],
-              }}>
-              Material Keluar
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: colors.secondary,
-              padding: 20,
-              marginVertical: 5,
-              borderRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: windowWidth / 25,
-                fontFamily: fonts.secondary[600],
-              }}>
-              Report Data Material
-            </Text>
-          </TouchableOpacity>
+            <MyButton
+              onPress={() => navigation.navigate('MaterialNew')}
+              title="Material Baru"
+              colorText={colors.black}
+              warna={colors.secondary}
+              iconColor={colors.black}
+              Icons="newspaper-outline"
+            />
+            <MyGap jarak={15} />
+            <MyButton
+              onPress={() => navigation.navigate('MaterialReturn')}
+              title="Material Return"
+              colorText={colors.black}
+              warna={colors.secondary}
+              iconColor={colors.black}
+              Icons="arrow-undo-outline"
+            />
+            <MyGap jarak={15} />
+            <MyButton
+              onPress={() => navigation.navigate('MaterialKeluar')}
+              title="Material Keluar"
+              colorText={colors.black}
+              warna={colors.secondary}
+              iconColor={colors.black}
+              Icons="exit-outline"
+            />
+            <MyGap jarak={15} />
+            <MyButton
+              onPress={() => navigation.navigate('MaterialReport')}
+              title="Report Data Material"
+              colorText={colors.black}
+              warna={colors.secondary}
+              iconColor={colors.black}
+              Icons="bar-chart-outline"
+            />
+          </View>
         </View>
       </ScrollView>
     </ImageBackground>

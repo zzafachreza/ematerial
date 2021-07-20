@@ -26,6 +26,13 @@ import Laporan from './Laporan';
 import Chat from './Chat';
 import Artikel from './Artikel';
 
+//
+import MaterialReturn from './MaterialReturn';
+import MaterialNew from './MaterialNew';
+import MaterialKeluar from './MaterialKeluar';
+
+import MaterialReport from './MaterialReport';
+
 export {
   Splash,
   GetStarted,
@@ -54,4 +61,8 @@ export {
   Laporan,
   Chat,
   Artikel,
+  MaterialNew,
+  MaterialKeluar,
+  MaterialReport,
+  MaterialReturn,
 };

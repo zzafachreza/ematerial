@@ -74,6 +74,8 @@ export default function GetStarted({navigation}) {
         warna={colors.white}
         iconColor={colors.primary}
         colorText={colors.primary}
+        borderColor={colors.primary}
+        borderSize={1}
         onPress={() => navigation.navigate('Register')}
       />
 
@@ -84,7 +86,7 @@ export default function GetStarted({navigation}) {
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.white,
     flex: 1,
     padding: 20,
   },

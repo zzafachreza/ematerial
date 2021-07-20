@@ -76,7 +76,7 @@ export default function Login({navigation}) {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: colors.secondary,
+            backgroundColor: colors.white,
             padding: 10,
             borderRadius: 10,
           }}>
@@ -152,7 +152,7 @@ export default function Login({navigation}) {
 
 const styles = StyleSheet.create({
   page: {
-    // backgroundColor: 'white',
+    backgroundColor: colors.white,
     flex: 1,
     padding: 10,
   },
