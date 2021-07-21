@@ -6,10 +6,38 @@ import {colors} from '../../utils/colors';
 import DatePicker from 'react-native-date-picker';
 import {Icon} from 'react-native-elements';
 import {fonts} from '../../utils/fonts';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default function MaterialReport() {
-  const [date, setDate] = useState(new Date());
-  const [date2, setDate2] = useState(new Date());
+  const Today = new Date();
+  const dd = String(Today.getDate()).padStart(2, '0');
+  const mm = String(Today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const yyyy = Today.getFullYear();
+  const today = `${yyyy}-${mm}-${dd}`;
+
+  const [kirim, setKirim] = useState({
+    awal: today,
+    akhir: today,
+  });
+
+  const sendServer = () => {
+    console.log('kirim', kirim);
+    RNFetchBlob.config({
+      // add this option that makes response data to be stored as a file,
+      // this is much more performant.
+      fileCache: true,
+    })
+      .fetch('GET', 'https://zavalabs.com/ematerial/pdf/index.php', {
+        //some headers ..
+      })
+      .then(res => {
+        // the temp file path
+        console.log('The file saved to ', res.path());
+      });
+  };
+
+  const [date, setDate] = useState(Today);
+  const [date2, setDate2] = useState(Today);
   return (
     <SafeAreaView>
       <ScrollView>
@@ -41,7 +69,18 @@ export default function MaterialReport() {
               size="small"
               mode="date"
               date={date}
-              onDateChange={setDate}
+              onDateChange={val => {
+                const Today = val;
+                const dd = String(Today.getDate()).padStart(2, '0');
+                const mm = String(Today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                const yyyy = Today.getFullYear();
+                const today = `${yyyy}-${mm}-${dd}`;
+
+                setKirim({
+                  ...kirim,
+                  awal: today,
+                });
+              }}
             />
           </View>
 
@@ -68,17 +107,55 @@ export default function MaterialReport() {
                 Tanggal (To)
               </Text>
             </View>
-            <DatePicker mode="date" date={date2} onDateChange={setDate2} />
+            <DatePicker
+              mode="date"
+              date={date2}
+              onDateChange={val => {
+                const Today = val;
+                const dd = String(Today.getDate()).padStart(2, '0');
+                const mm = String(Today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                const yyyy = Today.getFullYear();
+                const today = `${yyyy}-${mm}-${dd}`;
+
+                setKirim({
+                  ...kirim,
+                  akhir: today,
+                });
+              }}
+            />
           </View>
 
           <MyGap jarak={10} />
           <MyPicker
+            value={kirim.kondisi_material}
+            onValueChange={val =>
+              setKirim({
+                ...kirim,
+                kondisi_material: val,
+              })
+            }
             iconname="shield-checkmark-outline"
             label="Kondisi Material"
             data={[
               {
                 label: 'Pilih Kondisi',
                 value: 0,
+              },
+              {
+                label: 'BARU',
+                value: 'BARU',
+              },
+              {
+                label: 'RETURN',
+                value: 'RETURN',
+              },
+              {
+                label: 'KELUAR',
+                value: 'KELUAR',
+              },
+              {
+                label: 'SEMUA',
+                value: 'SEMUA',
               },
             ]}
           />
@@ -88,6 +165,7 @@ export default function MaterialReport() {
             title="PRINT"
             warna={colors.secondary}
             colorText={colors.black}
+            onPress={sendServer}
           />
         </View>
       </ScrollView>

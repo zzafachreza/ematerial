@@ -17,6 +17,7 @@ import messaging from '@react-native-firebase/messaging';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {MyButton} from '../../components';
 import {useIsFocused} from '@react-navigation/native';
+import {Icon} from 'react-native-elements';
 
 export default function ListData({navigation}) {
   const isFocused = useIsFocused();
@@ -34,7 +35,7 @@ export default function ListData({navigation}) {
       // console.log(res);
 
       axios
-        .post('https://zavalabs.com/gobenk/api/transaksi.php', {
+        .post('https://zavalabs.com/ematerial/api/transaksi.php', {
           id_member: res.id,
         })
         .then(res => {
@@ -51,7 +52,7 @@ export default function ListData({navigation}) {
         // console.log(res);
 
         axios
-          .post('https://zavalabs.com/gobenk/api/transaksi.php', {
+          .post('https://zavalabs.com/ematerial/api/transaksi.php', {
             id_member: res.id,
           })
           .then(res => {
@@ -84,34 +85,64 @@ export default function ListData({navigation}) {
                 borderWidth: 1,
                 backgroundColor: colors.white,
               }}>
-              <TouchableOpacity
-                onPress={() => {
-                  console.log('cek detail', item);
-                  navigation.navigate('ListDetail', item);
-                }}>
+              <TouchableOpacity>
                 <View style={{flex: 1, padding: 10}}>
+                  <Text
+                    style={{
+                      fontFamily: fonts.secondary[600],
+                      fontSize: windowWidth / 30,
+                      color: colors.black,
+                    }}>
+                    Nama Penerima :{' '}
+                    <Text
+                      style={{
+                        fontFamily: fonts.secondary[600],
+                        fontSize: windowWidth / 30,
+                        color: colors.primary,
+                      }}>
+                      {item.nama_penerima}
+                    </Text>
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: fonts.secondary[600],
+                      fontSize: windowWidth / 30,
+                      color: colors.black,
+                    }}>
+                    Nama Pengirim :{' '}
+                    <Text
+                      style={{
+                        fontFamily: fonts.secondary[600],
+                        fontSize: windowWidth / 30,
+                        color: colors.primary,
+                      }}>
+                      {item.nama_pengirim}
+                    </Text>
+                  </Text>
                   <Text
                     style={{
                       fontFamily: fonts.secondary[400],
                       fontSize: windowWidth / 30,
-                    }}>
-                    Nomor Transaksi - Nama Pelanggan :
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: fonts.secondary[600],
-                      fontSize: windowWidth / 25,
                       color: colors.black,
                     }}>
-                    {item.kode}
+                    {item.nama_material} aksdbjkasd askd akjsdasndka dasdaklsdn
+                    lasdalsd ka slas dsasdnlkas anlskd
                   </Text>
                   <Text
                     style={{
                       fontFamily: fonts.secondary[600],
-                      fontSize: windowWidth / 25,
+                      fontSize: windowWidth / 30,
                       color: colors.primary,
                     }}>
-                    {item.nama_pemesan}
+                    {item.kode_material} -{' '}
+                    <Text
+                      style={{
+                        fontFamily: fonts.secondary[600],
+                        fontSize: windowWidth / 30,
+                        color: colors.black,
+                      }}>
+                      {item.jenis_material}
+                    </Text>
                   </Text>
                   <Text
                     style={{
@@ -119,84 +150,85 @@ export default function ListData({navigation}) {
                     }}>
                     {item.tanggal}
                   </Text>
+                  <Text
+                    style={{
+                      fontFamily: fonts.secondary[400],
+                      fontSize: windowWidth / 30,
+                    }}>
+                    Jumlah :{' '}
+                    <Text
+                      style={{
+                        fontFamily: fonts.secondary[600],
+                        fontSize: windowWidth / 30,
+                        color: colors.primary,
+                      }}>
+                      {item.jumlah_material}
+                    </Text>
+                  </Text>
                 </View>
+
                 <View style={{flexDirection: 'row'}}>
                   <View
                     style={{
                       flex: 1,
                       justifyContent: 'flex-start',
                       alignItems: 'flex-start',
-                    }}></View>
+                    }}>
+                    <Text
+                      style={{
+                        // borderBottomRightRadius: 10,
+                        backgroundColor: colors.black,
+                        fontFamily: fonts.secondary[600],
+                        fontSize: windowWidth / 30,
+                        color: colors.white,
+                        padding: 10,
+                      }}>
+                      {item.kondisi_material}
+                    </Text>
+                  </View>
                   <View
                     style={{
                       justifyContent: 'flex-end',
                       alignItems: 'flex-end',
                     }}>
-                    <Text
+                    <TouchableOpacity
+                      onPress={() => {
+                        axios
+                          .post(
+                            'https://zavalabs.com/ematerial/api/transaksi_hapus.php',
+                            {
+                              id: item.id,
+                            },
+                          )
+                          .then(res => {
+                            axios
+                              .post(
+                                'https://zavalabs.com/ematerial/api/transaksi.php',
+                              )
+                              .then(res => {
+                                console.log(res.data);
+                                setData(res.data);
+                              });
+                          });
+                      }}
                       style={{
-                        // borderBottomRightRadius: 10,
-                        // backgroundColor: colors.border,
-                        fontFamily: fonts.secondary[600],
-                        fontSize: windowWidth / 20,
-                        color: colors.primary,
                         padding: 10,
+                        backgroundColor: colors.danger,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
                       }}>
-                      Rp. {item.total}
-                    </Text>
+                      <Text
+                        style={{
+                          fontFamily: fonts.secondary[600],
+                          color: colors.white,
+                          marginLeft: 5,
+                        }}>
+                        Hapus
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </TouchableOpacity>
-
-              {item.status === 'SEDANG DIPROSES' && (
-                <View style={{flexDirection: 'row'}}>
-                  <Text
-                    style={{
-                      flex: 1,
-                      backgroundColor: '#DEDEDE',
-                      color: colors.black,
-                      padding: 10,
-                      fontFamily: fonts.secondary[600],
-                    }}>
-                    SEDANG DIPROSES
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      axios
-                        .post(
-                          'https://zavalabs.com/gobenk/api/transaksi_hapus.php',
-                          {
-                            id_member: item.id_member,
-                            kode: item.kode,
-                          },
-                        )
-                        .then(res => {
-                          axios
-                            .post(
-                              'https://zavalabs.com/gobenk/api/transaksi.php',
-                              {
-                                id_member: item.id_member,
-                              },
-                            )
-                            .then(res => {
-                              console.log(res.data);
-                              setData(res.data);
-                            });
-                        });
-                    }}
-                    style={{
-                      padding: 10,
-                      backgroundColor: colors.danger,
-                    }}>
-                    <Text
-                      style={{
-                        fontFamily: fonts.secondary[600],
-                        color: colors.white,
-                      }}>
-                      Batalkan Transaksi
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )}
 
               {item.status === 'SELESAI' && (
                 <View style={{flexDirection: 'row'}}>

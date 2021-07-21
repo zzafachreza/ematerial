@@ -19,6 +19,7 @@ export default function Register({navigation}) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     nama_lengkap: null,
+    nik: null,
     email: null,
     password: null,
     telepon: null,
@@ -29,7 +30,7 @@ export default function Register({navigation}) {
     setLoading(true);
     console.log(data);
     axios
-      .post('https://zavalabs.com/mylaundry/api/register.php', data)
+      .post('https://zavalabs.com/ematerial/api/register.php', data)
       .then(res => {
         console.log(res);
         let err = res.data.split('#');
@@ -74,7 +75,7 @@ export default function Register({navigation}) {
         <MyGap jarak={20} />
         <MyInput
           label="Nama Lengkap"
-          iconname="person"
+          iconname="person-outline"
           value={data.nama_lengkap}
           onChangeText={value =>
             setData({
@@ -83,22 +84,22 @@ export default function Register({navigation}) {
             })
           }
         />
-        <MyGap jarak={10} />
+        <MyGap jarak={5} />
         <MyInput
           label="NIK"
-          iconname="person"
-          value={data.email}
+          iconname="card-outline"
+          value={data.nik}
           onChangeText={value =>
             setData({
               ...data,
-              email: value,
+              nik: value,
             })
           }
         />
-        <MyGap jarak={10} />
+        <MyGap jarak={5} />
         <MyInput
           label="Email"
-          iconname="mail"
+          iconname="mail-outline"
           value={data.email}
           onChangeText={value =>
             setData({
@@ -107,10 +108,10 @@ export default function Register({navigation}) {
             })
           }
         />
-        <MyGap jarak={10} />
+        <MyGap jarak={5} />
         <MyInput
           label="Alamat"
-          iconname="map"
+          iconname="map-outline"
           value={data.alamat}
           onChangeText={value =>
             setData({
@@ -120,10 +121,23 @@ export default function Register({navigation}) {
           }
         />
 
-        <MyGap jarak={10} />
+        <MyGap jarak={5} />
+        <MyInput
+          label="Telepon"
+          iconname="call-outline"
+          value={data.telepon}
+          onChangeText={value =>
+            setData({
+              ...data,
+              telepon: value,
+            })
+          }
+        />
+
+        <MyGap jarak={5} />
         <MyInput
           label="Password"
-          iconname="key"
+          iconname="key-outline"
           secureTextEntry
           value={data.password}
           onChangeText={value =>
@@ -133,7 +147,7 @@ export default function Register({navigation}) {
             })
           }
         />
-        <MyGap jarak={40} />
+        <MyGap jarak={20} />
         <MyButton
           warna={colors.primary}
           title="REGISTER"

@@ -52,8 +52,8 @@ const MainApp = () => {
   return (
     <Tab.Navigator tabBar={props => <BottomNavigator {...props} />}>
       <Tab.Screen name="Home" component={Home} />
-      {/* <Tab.Screen name="Transaksi" component={ListData} />
-      <Tab.Screen name="Chat" component={Chat} /> */}
+      <Tab.Screen name="Transaksi" component={ListData} />
+      {/* <Tab.Screen name="Chat" component={Chat} /> */}
       {/* <Tab.Screen name="Notifikasi" component={Notifikasi} /> */}
       <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>

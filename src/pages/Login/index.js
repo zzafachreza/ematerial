@@ -23,7 +23,7 @@ export default function Login({navigation}) {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
   const [data, setData] = useState({
-    email: 'zzafachreza@gmail.com',
+    nik: null,
     password: null,
   });
 
@@ -40,7 +40,7 @@ export default function Login({navigation}) {
     console.log(data);
     setTimeout(() => {
       axios
-        .post('https://zavalabs.com/mylaundry/api/login.php', data)
+        .post('https://zavalabs.com/ematerial/api/login.php', data)
         .then(res => {
           console.log(res.data);
           setLoading(false);
@@ -52,7 +52,7 @@ export default function Login({navigation}) {
           } else {
             storeData('user', res.data);
             axios
-              .post('https://zavalabs.com/mylaundry/api/update_token.php', {
+              .post('https://zavalabs.com/ematerial/api/update_token.php', {
                 id_member: res.data.id,
                 token: token,
               })
@@ -108,19 +108,19 @@ export default function Login({navigation}) {
           <MyGap jarak={20} />
           <MyInput
             label="NIK"
-            iconname="person"
-            // value={data.nama_lengkap}
-            // onChangeText={value =>
-            //   setData({
-            //     ...data,
-            //     email: value,
-            //   })
-            // }
+            iconname="card-outline"
+            value={data.nik}
+            onChangeText={value =>
+              setData({
+                ...data,
+                nik: value,
+              })
+            }
           />
           <MyGap jarak={20} />
           <MyInput
             label="Password"
-            iconname="key"
+            iconname="key-outline"
             secureTextEntry
             onChangeText={value =>
               setData({
