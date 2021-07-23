@@ -30,6 +30,7 @@ import Artikel from './Artikel';
 import MaterialReturn from './MaterialReturn';
 import MaterialNew from './MaterialNew';
 import MaterialKeluar from './MaterialKeluar';
+import MaterialReportDetail from './MaterialReportDetail';
 
 import MaterialReport from './MaterialReport';
 
@@ -65,4 +66,5 @@ export {
   MaterialKeluar,
   MaterialReport,
   MaterialReturn,
+  MaterialReportDetail,
 };

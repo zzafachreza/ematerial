@@ -40,6 +40,7 @@ import {
   MaterialReturn,
   MaterialKeluar,
   MaterialReport,
+  MaterialReportDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -303,6 +304,34 @@ export default function Router() {
           },
         })}
       />
+
+      <Stack.Screen
+        name="MaterialReportDetail"
+        component={MaterialReportDetail}
+        options={({route, navigation}) => ({
+          title: 'Report Data Material',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({current, layouts}) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
+      />
+
       <Stack.Screen
         name="Search2"
         component={Search2}

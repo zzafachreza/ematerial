@@ -7,8 +7,11 @@ import DatePicker from 'react-native-date-picker';
 import {Icon} from 'react-native-elements';
 import {fonts} from '../../utils/fonts';
 import RNFetchBlob from 'rn-fetch-blob';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import axios from 'axios';
+import {showMessage} from 'react-native-flash-message';
 
-export default function MaterialReport() {
+export default function MaterialReport({navigation}) {
   const Today = new Date();
   const dd = String(Today.getDate()).padStart(2, '0');
   const mm = String(Today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -20,19 +23,36 @@ export default function MaterialReport() {
     akhir: today,
   });
 
+  const [data, setData] = useState('');
+
+  const createPDF = async (nama_file, html) => {
+    let options = {
+      html: html,
+      fileName: 'REPORT ' + nama_file,
+      directory: 'Download',
+    };
+
+    let file = await RNHTMLtoPDF.convert(options);
+    console.log(file.filePath);
+    // alert(file.filePath);
+    showMessage({
+      type: 'success',
+      message: 'Berhsil di simpan di ' + file.filePath,
+    });
+
+    navigation.navigate('MaterialReportDetail', {
+      link: file.filePath,
+    });
+  };
+
   const sendServer = () => {
     console.log('kirim', kirim);
-    RNFetchBlob.config({
-      // add this option that makes response data to be stored as a file,
-      // this is much more performant.
-      fileCache: true,
-    })
-      .fetch('GET', 'https://zavalabs.com/ematerial/pdf/index.php', {
-        //some headers ..
-      })
+    axios
+      .post('https://zavalabs.com/ematerial/api/laporan.php', kirim)
       .then(res => {
-        // the temp file path
-        console.log('The file saved to ', res.path());
+        setData(res.data);
+        console.log(res.data);
+        createPDF(kirim.kondisi_material, res.data);
       });
   };
 
@@ -162,9 +182,10 @@ export default function MaterialReport() {
           <MyGap jarak={10} />
 
           <MyButton
-            title="PRINT"
-            warna={colors.secondary}
-            colorText={colors.black}
+            title="DOWNLOAD PDF"
+            warna={colors.primary}
+            colorText={colors.white}
+            Icons="download-outline"
             onPress={sendServer}
           />
         </View>
