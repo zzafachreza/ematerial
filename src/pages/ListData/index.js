@@ -74,6 +74,67 @@ export default function ListData({navigation}) {
           flex: 1,
         }}>
         {data.map(item => {
+          const MyStatus = () => {
+            if (item.kondisi_material == 'RETURN') {
+              return (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    flexDirection: 'row',
+                  }}>
+                  <Text
+                    style={{
+                      // borderBottomRightRadius: 10,
+                      backgroundColor: colors.black,
+                      fontFamily: fonts.secondary[600],
+                      fontSize: windowWidth / 30,
+                      color: colors.white,
+                      padding: 10,
+                    }}>
+                    {item.kondisi_material}
+                  </Text>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      flex: 1,
+                      paddingLeft: 5,
+                    }}>
+                    <Text
+                      style={{
+                        color: colors.black,
+                        fontFamily: fonts.secondary[400],
+                      }}>
+                      ( {item.alasan_return} )
+                    </Text>
+                  </View>
+                </View>
+              );
+            } else {
+              return (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                  }}>
+                  <Text
+                    style={{
+                      // borderBottomRightRadius: 10,
+                      backgroundColor: colors.black,
+                      fontFamily: fonts.secondary[600],
+                      fontSize: windowWidth / 30,
+                      color: colors.white,
+                      padding: 10,
+                    }}>
+                    {item.kondisi_material}
+                  </Text>
+                </View>
+              );
+            }
+          };
+
           return (
             <View
               key={item.id}
@@ -125,8 +186,7 @@ export default function ListData({navigation}) {
                       fontSize: windowWidth / 30,
                       color: colors.black,
                     }}>
-                    {item.nama_material} aksdbjkasd askd akjsdasndka dasdaklsdn
-                    lasdalsd ka slas dsasdnlkas anlskd
+                    {item.nama_material}
                   </Text>
                   <Text
                     style={{
@@ -168,24 +228,7 @@ export default function ListData({navigation}) {
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'flex-start',
-                      alignItems: 'flex-start',
-                    }}>
-                    <Text
-                      style={{
-                        // borderBottomRightRadius: 10,
-                        backgroundColor: colors.black,
-                        fontFamily: fonts.secondary[600],
-                        fontSize: windowWidth / 30,
-                        color: colors.white,
-                        padding: 10,
-                      }}>
-                      {item.kondisi_material}
-                    </Text>
-                  </View>
+                  <MyStatus />
                   <View
                     style={{
                       justifyContent: 'flex-end',

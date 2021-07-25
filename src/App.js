@@ -8,6 +8,7 @@ import {colors} from './utils/colors';
 
 import PushNotification from 'react-native-push-notification';
 import {storeData} from './utils/localStorage';
+import {AppearanceProvider} from 'react-native-appearance';
 
 export default function App() {
   LogBox.ignoreAllLogs();

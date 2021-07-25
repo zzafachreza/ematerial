@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   ImageBackground,
+  Switch,
 } from 'react-native';
 import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
@@ -26,6 +27,9 @@ export default function Login({navigation}) {
     nik: null,
     password: null,
   });
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   useEffect(() => {
     getData('token').then(res => {
@@ -65,8 +69,14 @@ export default function Login({navigation}) {
         });
     }, 1200);
   };
+
   return (
-    <ImageBackground style={styles.page}>
+    <ImageBackground
+      style={{
+        backgroundColor: isEnabled ? colors.black : colors.white,
+        flex: 1,
+        padding: 10,
+      }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
@@ -76,21 +86,40 @@ export default function Login({navigation}) {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: colors.white,
             padding: 10,
+            backgroundColor: colors.white,
             borderRadius: 10,
           }}>
+          <Switch
+            trackColor={{false: colors.border, true: colors.secondary}}
+            thumbColor={isEnabled ? colors.primary : colors.border}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+          <Text
+            style={{
+              fontFamily: fonts.secondary[600],
+              color: isEnabled ? colors.white : colors.black,
+            }}>
+            {isEnabled ? 'Dark Mode' : ''}
+          </Text>
           <Image
             style={{width: 150, height: 150, resizeMode: 'contain'}}
             source={require('../../assets/logo.png')}
           />
         </View>
-        <View style={styles.page}>
+        <View
+          style={{
+            backgroundColor: isEnabled ? colors.black : colors.white,
+            flex: 1,
+            padding: 10,
+          }}>
           <Text
             style={{
               fontFamily: fonts.secondary[400],
               fontSize: windowWidth / 20,
-              color: colors.black,
+              color: isEnabled ? colors.white : colors.black,
               // maxWidth: 230,
             }}>
             Silahkan login untuk masuk ke aplikasi{' '}
@@ -107,6 +136,9 @@ export default function Login({navigation}) {
 
           <MyGap jarak={20} />
           <MyInput
+            styleInput={{
+              color: isEnabled ? colors.white : colors.black,
+            }}
             label="NIK"
             iconname="card-outline"
             value={data.nik}
@@ -119,6 +151,9 @@ export default function Login({navigation}) {
           />
           <MyGap jarak={20} />
           <MyInput
+            styleInput={{
+              color: isEnabled ? colors.white : colors.black,
+            }}
             label="Password"
             iconname="key-outline"
             secureTextEntry

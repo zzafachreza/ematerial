@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView, Switch} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {MyInput, MyGap, MyButton} from '../../components';
+import {MyInput, MyGap, MyButton, MyPicker} from '../../components';
 import {colors} from '../../utils/colors';
 import DatePicker from 'react-native-date-picker';
 import {Icon} from 'react-native-elements';
@@ -10,7 +10,7 @@ import axios from 'axios';
 import {showMessage} from 'react-native-flash-message';
 import LottieView from 'lottie-react-native';
 
-export default function MaterialReturn({navigation}) {
+export default function MaterialNew({navigation}) {
   const Today = new Date();
   const dd = String(Today.getDate()).padStart(2, '0');
   const mm = String(Today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -22,11 +22,12 @@ export default function MaterialReturn({navigation}) {
   const [kirim, setKirim] = useState({
     tanggal: date,
     nama_penerima: null,
-    jenis_material: null,
+    jenis_material: 'CRITICAL',
     kode_material: null,
-    kondisi_material: null,
-    alasan_return: null,
+    kondisi_material: 'RETURN',
     jumlah_material: null,
+    alasan_return: null,
+    nama_pengirim: null,
   });
 
   const sendServer = () => {
@@ -49,14 +50,27 @@ export default function MaterialReturn({navigation}) {
       });
   };
 
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
   return (
     <SafeAreaView
       style={{
-        backgroundColor: colors.white,
+        backgroundColor: isEnabled ? colors.black : colors.white,
       }}>
       <ScrollView>
         <View style={{padding: 10, flex: 1}}>
+          <Switch
+            trackColor={{false: colors.border, true: colors.secondary}}
+            thumbColor={isEnabled ? colors.primary : colors.border}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
           <MyInput
+            styleInput={{
+              color: isEnabled ? colors.white : colors.black,
+            }}
             label="Nama Penerima"
             iconname="person-outline"
             value={kirim.nama_penerima}
@@ -64,6 +78,21 @@ export default function MaterialReturn({navigation}) {
               setKirim({
                 ...kirim,
                 nama_penerima: val,
+              })
+            }
+          />
+          <MyGap jarak={10} />
+          <MyInput
+            styleInput={{
+              color: isEnabled ? colors.white : colors.black,
+            }}
+            label="Nama Pengirim"
+            iconname="cube-outline"
+            value={kirim.nama_pengirim}
+            onChangeText={val =>
+              setKirim({
+                ...kirim,
+                nama_pengirim: val,
               })
             }
           />
@@ -92,6 +121,9 @@ export default function MaterialReturn({navigation}) {
               </Text>
             </View>
             <DatePicker
+              style={{
+                backgroundColor: isEnabled ? colors.white : colors.white,
+              }}
               mode="date"
               date={date}
               onDateChange={val => {
@@ -121,19 +153,40 @@ export default function MaterialReturn({navigation}) {
             }
           />
           <MyGap jarak={10} />
-          <MyInput
-            label="Jenis Material"
-            iconname="grid-outline"
-            value={kirim.jenis_material}
-            onChangeText={val =>
-              setKirim({
-                ...kirim,
-                jenis_material: val,
-              })
-            }
-          />
+
+          <View
+            style={{
+              backgroundColor: colors.white,
+              borderRadius: 10,
+            }}>
+            <MyPicker
+              value={kirim.jenis_material}
+              onValueChange={val =>
+                setKirim({
+                  ...kirim,
+                  jenis_material: val,
+                })
+              }
+              iconname="grid-outline"
+              label="Jenis Material"
+              data={[
+                {
+                  label: 'CRITICAL',
+                  value: 'CRITICAL',
+                },
+                {
+                  label: 'NON CRITICAL',
+                  value: 'NON CRITICAL',
+                },
+              ]}
+            />
+          </View>
+
           <MyGap jarak={10} />
           <MyInput
+            styleInput={{
+              color: isEnabled ? colors.white : colors.black,
+            }}
             label="Kode Material"
             iconname="barcode-outline"
             value={kirim.kode_material}
@@ -145,7 +198,7 @@ export default function MaterialReturn({navigation}) {
             }
           />
           <MyGap jarak={10} />
-          <MyInput
+          {/* <MyInput
             label="Kondisi Material"
             iconname="shield-checkmark-outline"
             value={kirim.kondisi_material}
@@ -155,9 +208,44 @@ export default function MaterialReturn({navigation}) {
                 kondisi_material: val,
               })
             }
-          />
+          /> */}
+          <View
+            style={{
+              backgroundColor: colors.white,
+              borderRadius: 10,
+            }}>
+            <MyPicker
+              value={kirim.kondisi_material}
+              onValueChange={val =>
+                setKirim({
+                  ...kirim,
+                  kondisi_material: val,
+                })
+              }
+              iconname="shield-checkmark-outline"
+              label="Kondisi Material"
+              data={[
+                {
+                  label: 'RETURN',
+                  value: 'RETURN',
+                },
+                {
+                  label: 'BARU',
+                  value: 'BARU',
+                },
+
+                {
+                  label: 'KELUAR',
+                  value: 'KELUAR',
+                },
+              ]}
+            />
+          </View>
           <MyGap jarak={10} />
           <MyInput
+            styleInput={{
+              color: isEnabled ? colors.white : colors.black,
+            }}
             label="Alasan Return"
             iconname="receipt-outline"
             value={kirim.alasan_return}
@@ -171,6 +259,10 @@ export default function MaterialReturn({navigation}) {
 
           <MyGap jarak={10} />
           <MyInput
+            styleInput={{
+              color: isEnabled ? colors.white : colors.black,
+            }}
+            keyboardType="number-pad"
             label="Jumlah Material"
             iconname="server-outline"
             value={kirim.jumlah_material}

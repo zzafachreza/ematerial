@@ -6,6 +6,7 @@ import {
   Dimensions,
   ImageBackground,
   SafeAreaView,
+  PermissionsAndroid,
   Image,
   Animated,
 } from 'react-native';
@@ -13,7 +14,6 @@ import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 import {color} from 'react-native-reanimated';
 import {getData} from '../../utils/localStorage';
-import {PermissionsAndroid} from 'react-native';
 import LottieView from 'lottie-react-native';
 
 export default function Splash({navigation}) {
@@ -21,6 +21,26 @@ export default function Splash({navigation}) {
   const windowHeight = Dimensions.get('window').height;
   const scaleLogo = new Animated.Value(0.5);
   const scaleText = new Animated.Value(100);
+
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Izinkan Untuk Download Report',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the camera');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
   Animated.timing(scaleLogo, {
     toValue: 3,
@@ -33,6 +53,7 @@ export default function Splash({navigation}) {
   }).start();
 
   useEffect(() => {
+    requestCameraPermission();
     const unsubscribe = getData('user').then(res => {
       // console.log(res);
       if (!res) {

@@ -29,7 +29,7 @@ export default function MaterialReport({navigation}) {
     let options = {
       html: html,
       fileName: 'REPORT ' + nama_file,
-      directory: 'Download',
+      directory: '',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
@@ -158,8 +158,8 @@ export default function MaterialReport({navigation}) {
             label="Kondisi Material"
             data={[
               {
-                label: 'Pilih Kondisi',
-                value: 0,
+                label: 'SEMUA',
+                value: 'SEMUA',
               },
               {
                 label: 'BARU',
@@ -172,10 +172,6 @@ export default function MaterialReport({navigation}) {
               {
                 label: 'KELUAR',
                 value: 'KELUAR',
-              },
-              {
-                label: 'SEMUA',
-                value: 'SEMUA',
               },
             ]}
           />

@@ -7,8 +7,7 @@ export default function PerjanjianDetail({navigation, route}) {
   //   navigation.setOptions({title: item.nama});
   return (
     <View style={{flex: 1}}>
-      {/* <Text>{item.image}</Text> */}
-      {/* Some Controls to change PDF resource */}
+      <Text>{item.link}</Text>
       <PDFView
         fadeInDuration={250.0}
         style={{flex: 1}}

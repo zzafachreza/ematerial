@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   ImageBackground,
+  Switch,
 } from 'react-native';
 import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
@@ -25,6 +26,9 @@ export default function Register({navigation}) {
     telepon: null,
     alamat: null,
   });
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const simpan = () => {
     setLoading(true);
@@ -54,18 +58,30 @@ export default function Register({navigation}) {
       });
   };
   return (
-    <ImageBackground style={styles.page}>
+    <ImageBackground
+      style={{
+        backgroundColor: isEnabled ? colors.black : colors.white,
+        flex: 1,
+        padding: 10,
+      }}>
       <ScrollView style={styles.page} showsVerticalScrollIndicator={false}>
         {/* <Image
         source={require('../../assets/logooren.png')}
         style={styles.image}
       /> */}
+        <Switch
+          trackColor={{false: colors.border, true: colors.secondary}}
+          thumbColor={isEnabled ? colors.primary : colors.border}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
         <Text
           style={{
             marginTop: 20,
             fontFamily: fonts.secondary[400],
             fontSize: 16,
-            color: colors.black,
+            color: isEnabled ? colors.white : colors.black,
             // maxWidth: 230,
           }}>
           Silahkan melakukan pendaftaran terlebih dahulu, sebelum login ke
@@ -74,6 +90,9 @@ export default function Register({navigation}) {
 
         <MyGap jarak={20} />
         <MyInput
+          styleInput={{
+            color: isEnabled ? colors.white : colors.black,
+          }}
           label="Nama Lengkap"
           iconname="person-outline"
           value={data.nama_lengkap}
@@ -86,6 +105,9 @@ export default function Register({navigation}) {
         />
         <MyGap jarak={5} />
         <MyInput
+          styleInput={{
+            color: isEnabled ? colors.white : colors.black,
+          }}
           label="NIK"
           iconname="card-outline"
           value={data.nik}
@@ -98,6 +120,9 @@ export default function Register({navigation}) {
         />
         <MyGap jarak={5} />
         <MyInput
+          styleInput={{
+            color: isEnabled ? colors.white : colors.black,
+          }}
           label="Email"
           iconname="mail-outline"
           value={data.email}
@@ -110,6 +135,9 @@ export default function Register({navigation}) {
         />
         <MyGap jarak={5} />
         <MyInput
+          styleInput={{
+            color: isEnabled ? colors.white : colors.black,
+          }}
           label="Alamat"
           iconname="map-outline"
           value={data.alamat}
@@ -123,6 +151,9 @@ export default function Register({navigation}) {
 
         <MyGap jarak={5} />
         <MyInput
+          styleInput={{
+            color: isEnabled ? colors.white : colors.black,
+          }}
           label="Telepon"
           iconname="call-outline"
           value={data.telepon}
@@ -136,6 +167,9 @@ export default function Register({navigation}) {
 
         <MyGap jarak={5} />
         <MyInput
+          styleInput={{
+            color: isEnabled ? colors.white : colors.black,
+          }}
           label="Password"
           iconname="key-outline"
           secureTextEntry
