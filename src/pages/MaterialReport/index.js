@@ -21,6 +21,7 @@ export default function MaterialReport({navigation}) {
   const [kirim, setKirim] = useState({
     awal: today,
     akhir: today,
+    kondisi_material: 'SEMUA',
   });
 
   const [data, setData] = useState('');
